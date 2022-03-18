@@ -71,8 +71,8 @@ class ViewUsers(APIView):
             payload = jwt.decode(token, SECRET, algorithms=[HASH_ALGORITHM])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('You are not authenticated!')
-
-        user = User.objects.filter(id=payload['id']).first()
+        print(id)
+        user = User.objects.get(id=payload['id'])
         if user.is_staff:
             user = User.objects.all()
             serializer = UserSerializer(user, many=True)

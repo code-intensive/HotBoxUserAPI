@@ -1,0 +1,17 @@
+regular user accounts
+
+email": "justtega@gmail.com"
+password": "Ikeonly@grace"
+
+"password": "Ikeonly@grace",
+"email": "ikeonly@gmail.com"
+
+name                email                       password
+codeintensive       justtega@gmail.com     Ikeonly@grace
+codeaggressive      ikeonly@gmail.com    Ikeonly@grace
+mosh                mosh@hotbox.com             mosh
+victoria            victoria@hotbox.com         victoria
+steve               steve@hotbox.com            steve
+sharon              sharon@hotbox.com           sharon
+tega                tega@hotbox.com             tega
+
