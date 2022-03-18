@@ -7,11 +7,11 @@
 ## migrate to database
 ## runserver
 
-JSON (body) of request
-##  route       -         for                    -          api-keys
+## JSON (body) is required for consumption of the API
+##  route       -         for                     -          api-keys               -       http method
 
-### /register   -   for sign up                   -   (name, email, password)
-### /login      -   authenticate user  s          -   (email, password)
-### /user       -   signed in user details        -   (email, password)
-### /users      -   signed in user details        -   (email, password)
-### /logout     -   deauthenticate signed in user -   (Null)
+/register   -   for sign up                   -   (name, email, password)       -       POST
+/login      -   authenticate user  s          -   (email, password)             -       POST
+/user       -   signed in user details        -   Not required                  -       GET
+/users      -   signed in user details        -   Not required                  -       GET
+/logout     -   deauthenticate signed in user -   Not required                  -       POST
