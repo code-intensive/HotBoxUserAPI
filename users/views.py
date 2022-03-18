@@ -33,7 +33,7 @@ class LoginView(APIView):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=15),
             'iat': datetime.datetime.utcnow()
         }
-
+        # Token is consistent accross requests until payload's ext times out or user logs out
         token = jwt.encode(payload, SECRET, algorithm=HASH_ALGORITHM)
 
         response = Response()
@@ -65,18 +65,17 @@ class ViewUsers(APIView):
         token = request.COOKIES.get('jwt', None)
         if not token:
             raise AuthenticationFailed('You are not authenticated!')
-
         try:
             payload = jwt.decode(token, SECRET, algorithms=[HASH_ALGORITHM])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('You are not authenticated!')
 
         user = User.objects.filter(id=payload['id']).first()
-        if not user.is_staff:
-            raise AuthenticationFailed("You are authenticated but not authorized, sign in with a privileged account")
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
+        if user.is_staff:
+            user = User.objects.all()
+            serializer = UserSerializer(user, many=True)
+            return Response(serializer.data)
+        raise AuthenticationFailed("You are authenticated but not authorized, sign in with a privileged account")
 
 
 class LogoutView(APIView):
