@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
-from .models import User
+from users.models import User
 import jwt, datetime
 from .constants import *
 
@@ -40,6 +40,7 @@ class LoginView(APIView):
 
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
+            'message': "Your sign in was successful",
             'jwt': token
         }
         return response
@@ -59,6 +60,7 @@ class UserView(APIView):
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
 
 class ViewUsers(APIView):
     def get(self, request):
