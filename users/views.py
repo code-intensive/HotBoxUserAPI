@@ -22,11 +22,8 @@ class LoginView(APIView):
 
         user = User.objects.filter(email=email).first()
 
-        if user is None:
-            raise AuthenticationFailed('User not found!')
-
-        if not user.check_password(password):
-            raise AuthenticationFailed('Incorrect password!')
+        if user is None or not user.check_password(password):
+            raise AuthenticationFailed('Invalid login credentials')
 
         payload = {
             'id': user.id,
@@ -37,7 +34,7 @@ class LoginView(APIView):
         token = jwt.encode(payload, SECRET, algorithm=HASH_ALGORITHM)
 
         response = Response()
-
+        user.last_login = datetime.datetime.now()
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
             'message': "Your sign in was successful",
@@ -71,11 +68,10 @@ class ViewUsers(APIView):
             payload = jwt.decode(token, SECRET, algorithms=[HASH_ALGORITHM])
         except jwt.ExpiredSignatureError:
             raise AuthenticationFailed('You are not authenticated!')
-        print(id)
-        user = User.objects.get(id=payload['id'])
-        if user.is_staff:
-            user = User.objects.all()
-            serializer = UserSerializer(user, many=True)
+        user = user = User.objects.filter(id=payload['id']).first()
+        if user.has_perms("users .view_users"):
+            users = User.objects.all()
+            serializer = UserSerializer(users, many=True)
             return Response(serializer.data)
         raise AuthenticationFailed("You are authenticated but not authorized, sign in with a privileged account")
 

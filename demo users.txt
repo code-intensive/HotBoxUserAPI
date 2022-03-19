@@ -1,0 +1,11 @@
+name                email                       password        authorizations
+
+codeintensive       justtega@gmail.com     Ikeonly@grace        regular
+codeaggressive      ikeonly@gmail.com    Ikeonly@grace          regular
+mosh                mosh@hotbox.com             mosh@M          superuser
+victoria            victoria@hotbox.com         victoria        superuser
+steve               steve@hotbox.com            steve           staff
+sharon              sharon@hotbox.com           sharon          staff
+tega                tega@hotbox.com             tega            superuser
+moshood             moshood@upwork.com          moshood         regular
+coded               coded@upwork.com            coded           regular
