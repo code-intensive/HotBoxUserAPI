@@ -6,7 +6,7 @@ from users.models import User
 import jwt, datetime
 from .constants import *
 
-# Create your views here.
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -30,7 +30,7 @@ class LoginView(APIView):
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=15),
             'iat': datetime.datetime.utcnow()
         }
-        # Token is consistent accross requests until payload's ext times out or user logs out
+        # Token is consistent accross requests until payload's exp times out or user logs out
         token = jwt.encode(payload, SECRET, algorithm=HASH_ALGORITHM)
 
         response = Response()
